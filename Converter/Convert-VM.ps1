@@ -12,7 +12,7 @@ Param (
 [Parameter(ParameterSetName="VHD")]
 [byte]$CPU = 1,
 [Parameter(ParameterSetName="VHD")]
-[byte]$Memory = 1
+[int]$Memory = 1024
 )
 
 #region Consts
@@ -67,10 +67,10 @@ Switch ($PSCmdlet.ParameterSetName)
         $config += "displayName = `"$($VM.VMName)`"`r`n"
         $config += "numvcpus = `"$($VM.ProcessorCount)`"`r`n"
         if ($vm.DynamicMemoryEnabled) {
-            $config += "memSize = `"$([math]::Round($vm.MemoryMaximum/1GB,0))`"`r`n"
+            $config += "memSize = `"$([math]::Round($vm.MemoryMaximum/1MB,0))`"`r`n"
         }
         else {
-            $config += "memSize = `"$([math]::Round($vm.MemoryStartup/1GB,0))`"`r`n"
+            $config += "memSize = `"$([math]::Round($vm.MemoryStartup/1MB,0))`"`r`n"
         }
 
         $i = 0
